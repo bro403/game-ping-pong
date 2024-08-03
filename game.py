@@ -53,6 +53,11 @@ class Player(GameSprite):
 player1 = Player('raketka1.png', 0, 210, 60,100,10)
 player2 = Player('raketka2.png', 840,210,60,100,10)
 
+ball = GameSprite('ball.png', 400, 220,50,50,5)
+speed_x = 5
+speed_y = 5
+
+
 while game:
     for e in event.get():
         if e.type == QUIT:
@@ -62,7 +67,15 @@ while game:
         window.blit(background,(0,0))
         player1.update_l()
         player1.reset()
-        player2.update_wr()
+        player2.update_r()
         player2.reset()
+        ball.rect.y += speed_y
+        ball.rect.x += speed_x
+        ball.reset()
+        if ball.rect.y <= 0 or ball.rect.y >= 450:
+            speed_y *=  -1
+        if sprite.collide_rect(player1, ball) or sprite.collide_rect(player2, ball):
+            speed_x *= -1
     display.update()
     clock.tick(FPS)
+

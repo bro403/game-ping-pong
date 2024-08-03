@@ -36,19 +36,22 @@ class GameSprite(sprite.Sprite):
     def reset(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
 class Player(GameSprite):
-    def update(self):
+    def update_l(self):
         keys_pressed = key.get_pressed()
-        if keys_pressed[K_a] and self.rect.x > 0:
-            self.rect.x -= self.speed
-        if keys_pressed[K_d] and self.rect.x < 740:
-            self.rect.x += self.speed
-    def fire(self):
-        bullet = Bullet('pyla.png', self.rect.centerx, self.rect.top, 15,20, -15)
-        bullets.add(bullet)
+        if keys_pressed[K_w] and self.rect.y > 0:
+            self.rect.y -= self.speed
+        if keys_pressed[K_s] and self.rect.y < 400:
+            self.rect.y += self.speed
+    def update_r(self):
+        keys_pressed = key.get_pressed()
+        if keys_pressed[K_UP] and self.rect.y > 0:
+            self.rect.y -= self.speed
+        if keys_pressed[K_DOWN] and self.rect.y < 400:
+            self.rect.y += self.speed
 
 
-player = Player('raketka1.jpg', 0, 420, 160,80,10)
-
+player1 = Player('raketka1.png', 0, 210, 60,100,10)
+player2 = Player('raketka2.png', 840,210,60,100,10)
 
 while game:
     for e in event.get():
@@ -57,8 +60,9 @@ while game:
         
     if finish != True:
         window.blit(background,(0,0))
-        player.update()
-        player.reset()
-
+        player1.update_l()
+        player1.reset()
+        player2.update_wr()
+        player2.reset()
     display.update()
     clock.tick(FPS)

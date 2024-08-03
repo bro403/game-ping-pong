@@ -2,6 +2,9 @@ from pygame import *
 from random import randint
 font.init()
 
+font1 = font.Font(None,35)
+lose1 = font1.render('ИГРОК 1 ПРОИГРАЛ!', True, (180,0,0))
+lose2 = font1.render('ИГРОК 2 ПРОИГРАЛ!', True, (180,0,0))
 
 window = display.set_mode((900,500))
 display.set_caption('Пинг-понг')
@@ -76,6 +79,11 @@ while game:
             speed_y *=  -1
         if sprite.collide_rect(player1, ball) or sprite.collide_rect(player2, ball):
             speed_x *= -1
+        if ball.rect.x < 0:
+            finish = True
+            window.blit(lose1, (200,200))
+        if ball.rect.x > 900 :
+            finish = True
+            window.blit(lose2, (200,200))
     display.update()
     clock.tick(FPS)
-
